@@ -3,6 +3,8 @@ msaraiva/erlang
 
 Erlang & OTP minimal environment based on Alpine Linux. 
 
+This image contains the basic dependencies for running Elixir applications.
+
 The following packages are pre-installed:
 
 - ncurses
@@ -11,6 +13,8 @@ The following packages are pre-installed:
 - erlang-kernel
 - erlang-stdlib
 - erlang-compiler
+- erlang-crypto
+- erlang-syntax-tools
 - erlang
 
 
