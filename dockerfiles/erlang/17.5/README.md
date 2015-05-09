@@ -7,8 +7,6 @@ This image contains the basic dependencies for running Elixir applications.
 
 The following packages are pre-installed:
 
-- ncurses
-- ncurses-terminfo-base
 - ncurses-libs
 - erlang-kernel
 - erlang-stdlib

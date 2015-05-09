@@ -5,7 +5,7 @@ Base image for Erlang/Elixir applications.
 
 Adds the following libraries to the original alpine image:
 
-- ncurses
+- ncurses-libs
 
 ## Usage
 
