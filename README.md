@@ -222,6 +222,40 @@ Running:
 $ docker run --rm -p 4000:4000 msaraiva/phoenix_chat_example
 ```
 
+### Hello NIF
+
+A simple command line executable that calculates a dot product of two lists on a NIF
+
+- Source: <https://github.com/msaraiva/docker-alpine-examples/>
+- Built with `mix escript.build`
+- NIF compiled with GCC
+- Compilation inside the container
+- **No need to install Erlang/Elixir on the host machine**
+- Image size: **18.78Mb**
+
+Compiling:
+
+```
+$ cd hello_nif
+$ docker run --rm -v $PWD:$PWD -w $PWD -e "MIX_ENV=prod" msaraiva/elixir-gcc sh -c "mix deps.get && mix escript.build"
+```
+
+Building the docker image:
+
+```
+$ docker build -t hello_nif .
+```
+
+Running:
+
+```
+$ docker run --rm hello_nif
+Hello! This dot product was calculated by a NIF:
+[1.0, 2.0, 3.0] x [5.0, 10.0, 20.0] = 85.0
+```
+
+
+
 
 ## Building images for development
 
