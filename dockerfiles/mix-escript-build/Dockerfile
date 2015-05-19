@@ -1,9 +1,5 @@
-FROM alpine:3.1
+FROM msaraiva/erlang:17.5
 MAINTAINER Marlus Saraiva <marlus.saraiva@gmail.com>
-
-RUN echo 'http://dl-4.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
-
-RUN apk --update add erlang erlang-crypto erlang-syntax-tools && rm -rf /var/cache/apk/*
 
 ONBUILD ADD config/  /app/config/
 ONBUILD ADD lib/     /app/lib/

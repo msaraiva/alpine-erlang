@@ -1,4 +1,4 @@
-msaraiva/erlang
+Erlang & OTP
 =====
 
 Erlang & OTP minimal environment based on Alpine Linux. 
