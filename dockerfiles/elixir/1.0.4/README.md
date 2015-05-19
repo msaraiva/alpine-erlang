@@ -1,4 +1,4 @@
-Elixir
+Elixir on Alpine Linux
 =====
 From the official [website](http://elixir-lang.org/):
 > Elixir is a dynamic, functional language designed for building scalable and maintainable applications.
