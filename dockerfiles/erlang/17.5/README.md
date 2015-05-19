@@ -15,6 +15,7 @@ The following packages are pre-installed:
 - erlang-syntax-tools
 - erlang
 
+> **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. To see a full list of the packages, run `docker run --rm msaraiva/alpine:3.1 apk --update search 'erlang' | sort`
 
 ## Usage
 
