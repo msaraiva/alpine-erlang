@@ -258,7 +258,7 @@ You can use the above image as base image for your own Dockerfile. Add more pack
 Dockerfile from <https://github.com/msaraiva/docker-alpine-examples/blob/master/elixir-dev/>:
 
 ```
-FROM msaraiva/alpine-elixir
+FROM msaraiva/elixir
 
 RUN apk --update add bash vim git-bash-completion && \
     rm -rf /var/cache/apk/*
