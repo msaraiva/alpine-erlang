@@ -1,7 +1,7 @@
 Minimal Erlang/Elixir docker images with Alpine Linux
 =====
 
-> **Note:** All base images listed here are automated builds and their Dockerfiles can be found at: <https://github.com/msaraiva/docker-alpine>.
+> **Note:** All base images listed here are automated builds and their Dockerfiles can be found in the [dockerfiles](https://github.com/msaraiva/docker-alpine/tree/master/dockerfiles) folder.
 
 Alpine Linux is a lightweight Linux distribution built around musl libc and busybox.
 The main focus of this distribution is security, simplicity and resource efficiency.
