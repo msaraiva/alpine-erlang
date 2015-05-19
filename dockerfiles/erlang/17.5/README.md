@@ -13,7 +13,6 @@ The following packages are pre-installed:
 - erlang-compiler
 - erlang-crypto
 - erlang-syntax-tools
-- erlang-sasl
 - erlang
 
 
