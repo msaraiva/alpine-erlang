@@ -1,7 +1,7 @@
 Elixir
 =====
-
-Elixir minimal environment based on Alpine Linux. 
+From the official [website](http://elixir-lang.org/):
+> Elixir is a dynamic, functional language designed for building scalable and maintainable applications.
 
 Image size: **47.54 MB**
 
@@ -15,8 +15,11 @@ The following packages are pre-installed:
 - erlang-sasl
 - erlang-erl-interface
 - erlang-dev
+- elixir
 - wget
 - git + dependencies
+- rebar
+- hex
 
 > **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. To see a full list of the packages, run `docker run --rm msaraiva/alpine:3.1 apk --update search 'erlang' | sort`
 
