@@ -7,6 +7,9 @@ Adds the following libraries to the original alpine image:
 
 - ncurses-libs
 
+Image size: **5.492 MB** 
+
+
 ## Usage
 
 ```
