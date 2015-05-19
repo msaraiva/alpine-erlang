@@ -5,6 +5,8 @@ Erlang & OTP minimal environment based on Alpine Linux.
 
 This image contains the basic dependencies for running Elixir applications.
 
+Image size: **16.83 MB**
+
 The following packages are pre-installed:
 
 - ncurses-libs
