@@ -11,7 +11,7 @@ When creating a docker image, you probably want to minimize its size as much as 
 
 I'll describe here some examples on how to create minimal docker images for Erlang/Elixir projects using Alpine Linux.
 
-## Examples
+### Index
 
 - [Installing Erlang with apk](#installing-erlang)
 - [Installing Elixir with apk](#installing-elixir)
@@ -22,6 +22,9 @@ I'll describe here some examples on how to create minimal docker images for Erla
 - [Phoenix Chat Example](#phoenix-chat)
 - [Hello NIF](#hello-nif)
 - [Building images for development](#build-for-dev)
+- [TODO](#todo)
+- [Other Resources](#other-resources)
+
 
 
 > **Note:** All base images listed here are automated builds and their Dockerfiles can be found in the [dockerfiles](https://github.com/msaraiva/docker-alpine/tree/master/dockerfiles) folder.
@@ -352,13 +355,14 @@ ADD gitconfig /root/.gitconfig
 CMD ["/bin/bash", "-l"]
 ```
 
-## TODO
-* More examples?
+## <a name="todo"></a> TODO
+* Erlang examples
 
 
-## Other Resources
+## <a name="other-resources"></a> Other Resources
 
-* <https://github.com/gliderlabs/docker-alpine>
 * <http://www.alpinelinux.org/about/>
+* <https://github.com/gliderlabs/docker-alpine>
 * <http://gliderlabs.viewdocs.io/docker-alpine>
+* [@MarlusSaraiva](https://twitter.com/MarlusSaraiva) :)
 
