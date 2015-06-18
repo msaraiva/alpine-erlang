@@ -9,15 +9,62 @@ When creating a docker image, you probably want to minimize its size as much as 
 
 > **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. To see a full list of the packages, run `docker run --rm msaraiva/alpine:3.1 apk --update search 'erlang' | sort`
 
-
+I'll describe here some examples on how to create minimal docker images for Erlang/Elixir projects using Alpine Linux.
 
 ## Examples
 
-I'll describe here some examples on how to create minimal docker images for Elixir projects using Alpine Linux.
+- [Installing Erlang with apk](#installing-erlang)
+- [Installing Elixir with apk](#installing-elixir)
+- [Hello world (compilation on host machine)](#hello-world-compilation-host)
+- [Hello world (compilation inside the container)](#hello-world-compilation-container)
+- [Phoenix + Elixir Release Manager (exrm)](#phoenix-exrm)
+- [Hello Phoenix](#hello-phoenix)
+- [Phoenix Chat Example](#phoenix-chat)
+- [Hello NIF](#hello-nif)
+- [Building images for development](#build-for-dev)
+
 
 > **Note:** All base images listed here are automated builds and their Dockerfiles can be found in the [dockerfiles](https://github.com/msaraiva/docker-alpine/tree/master/dockerfiles) folder.
 
-### Hello world (compilation on host machine)
+### <a name="installing-erlang"></a> Installing Erlang with apk
+
+Create a Dockerfile
+
+```Dockerfile
+FROM msaraiva/alpine:3.1
+
+RUN apk --update add erlang && rm -rf /var/cache/apk/*
+
+CMD ["/bin/sh"]
+```
+
+> **Note:** The `apk` command is the official tool for package management on Alpine Linux. Something like `apt-get` on Ubuntu. More information about `apk` can be found [here](http://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management).
+
+Build the image:
+
+```
+$ docker build -t erlang .
+```
+
+Run `docker images`. You should see something like:
+
+```
+REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUAL SIZE
+erlang               latest        d76965a1f753       4 seconds ago       16.22 MB
+```
+
+
+### <a name="installing-elixir"></a> Installing Elixir with apk
+
+```Dockerfile
+FROM msaraiva/erlang:17.5
+
+RUN apk --update add elixir && rm -rf /var/cache/apk/*
+
+CMD ["/bin/sh"]
+```
+
+### <a name="hello-world-compilation-host"></a> Hello world (compilation on host machine)
 A simple command line executable
 
 - Source: <https://github.com/msaraiva/docker-alpine-examples/>
@@ -25,7 +72,7 @@ A simple command line executable
 - Compilation on host machine
 - Requires Erlang 17.5 and Elixir 1.0.4 on the host machine
 - **You need to compile your application on the host machine before building this image**
-- Image size: **18.83Mb**
+- Image size: **18.83MB**
 
 Dockerfile:
 
@@ -76,15 +123,12 @@ ENTRYPOINT ["/usr/local/bin/hello"]
 
 ```
 
-> **Note:** The `apk` command is the official tool for package management on Alpine Linux. Something like `apt-get` on Ubuntu. More information about `apk` can be found [here](http://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management).
-
-
-### Hello world (compilation inside the container)
+### <a name="hello-world-compilation-container"></a> Hello world (compilation inside the container)
 The same simple command line executable. But:
 
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **18.89Mb**
+- Image size: **18.89MB**
 
 For this example, we'll be using [msaraiva/mix-escript-build](https://github.com/msaraiva/docker-alpine/blob/master/dockerfiles/mix-escript-build/Dockerfile/) as base image. This image uses the `ONBUILD` docker instruction to add project files required for compilation, just before the build. For more information about the `ONBUILD` instruction, check out the [Dockerfile Reference](https://docs.docker.com/reference/builder/#onbuild).
 
@@ -110,7 +154,7 @@ $ docker run --rm hello Docker
 Hello, Docker!
 ```
 
-##Phoenix + Elixir Release Manager (exrm)
+## <a name="phoenix-exrm"></a> Phoenix + Elixir Release Manager (exrm)
 
 
 In order to generate releases for phoenix applications, you need to make some minimal changes in a couple of files. See [this page](http://www.phoenixframework.org/v0.13.0/docs/advanced-deployment) from the Phoenix documentation for details. If you just want to see the changes, take a look at [this commit](https://github.com/msaraiva/docker-alpine-examples/commit/16ce93a1288cd974c11c2f2923ced16993b6709f).
@@ -127,7 +171,7 @@ By default, `exrm` pulls the Erlang runtime system from the build environment. T
   
 Let's see how we can do this.
 
-### Hello Phoenix
+### <a name="hello-phoenix"></a> Hello Phoenix
 
 This is the hello phoenix application created when you run `mix phoenix.new hello_phoenix --no-brunch --no-ecto`
 
@@ -136,7 +180,7 @@ This is the hello phoenix application created when you run `mix phoenix.new hell
 - Compilation on host machine
 - Requires Erlang 17.5 and Elixir 1.0.4 on the host machine
 - **You need to generate a release on the host machine before building this image**
-- Image size: **22.55Mb**
+- Image size: **22.55MB**
 
 
 Dockerfile:
@@ -174,7 +218,7 @@ Running:
 $ docker run --rm -p 4000:4000 hello_phoenix
 ```
 
-### Phoenix Chat Example
+### <a name="phoenix-chat"></a> Phoenix Chat Example
 
 A fork from Chris McCord's [phoenix_chat_example](https://github.com/chrismccord/phoenix_chat_example).
 
@@ -183,7 +227,7 @@ A fork from Chris McCord's [phoenix_chat_example](https://github.com/chrismccord
 - Compilation on host machine
 - Requires Erlang 17.5 and Elixir 1.0.4 on the host machine
 - **You need to generate a release on the host machine before building this image**
-- Image size: **22.86Mb**
+- Image size: **22.86MB**
 
 Dockerfile:
 
@@ -222,7 +266,7 @@ Running:
 $ docker run --rm -p 4000:4000 msaraiva/phoenix_chat_example
 ```
 
-### Hello NIF
+### <a name="hello-nif"></a> Hello NIF
 
 A simple command line executable that calculates a dot product of two lists on a NIF
 
@@ -231,7 +275,7 @@ A simple command line executable that calculates a dot product of two lists on a
 - NIF compiled with GCC
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **18.78Mb**
+- Image size: **18.78MB**
 
 Compiling:
 
@@ -257,7 +301,7 @@ Hello! This dot product was calculated by a NIF:
 
 
 
-## Building images for development
+## <a name="build-for-dev"></a> Building images for development
 
 In case you want to create images for development, you'll need to install git and wget. This way, mix can properly download and compile all dependencies. Check out the Dockerfile from [msaraiva/elixir](https://registry.hub.docker.com/u/msaraiva/elixir/):
 
