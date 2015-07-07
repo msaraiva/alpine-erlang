@@ -7,7 +7,7 @@ All that makes Alpine Linux perfect to work as base images for linux containers.
 
 When creating a docker image, you probably want to minimize its size as much as possible. At the same time, you might want to have access to a full-featured package system with a large range of packages available. As far as I can see, Alpine Linux is the best choice for that.
 
-> **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. To see a full list of the packages, run `docker run --rm msaraiva/alpine:3.1 apk --update search 'erlang' | sort`
+> **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. To see a full list of the packages, run `docker run --rm msaraiva/alpine-erlang:3.2 apk --update search 'erlang' | sort`
 
 I'll describe here some examples on how to create minimal docker images for Erlang/Elixir projects using Alpine Linux.
 
@@ -34,7 +34,7 @@ I'll describe here some examples on how to create minimal docker images for Erla
 Create a Dockerfile
 
 ```Dockerfile
-FROM msaraiva/alpine:3.1
+FROM msaraiva/alpine-erlang:3.2
 
 RUN apk --update add erlang && rm -rf /var/cache/apk/*
 
@@ -53,14 +53,14 @@ Run `docker images`. You should see something like:
 
 ```
 REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUAL SIZE
-erlang               latest        d76965a1f753       4 seconds ago       16.22 MB
+erlang               latest        d76965a1f753       4 seconds ago       16.78 MB
 ```
 
 
 ### <a name="installing-elixir"></a> Installing Elixir with apk
 
 ```Dockerfile
-FROM msaraiva/erlang:17.5
+FROM msaraiva/erlang:18.0.1
 
 RUN apk --update add elixir && rm -rf /var/cache/apk/*
 
@@ -73,14 +73,14 @@ A simple command line executable
 - Source: <https://github.com/msaraiva/docker-alpine-examples/>
 - Built with `mix escript.build`
 - Compilation on host machine
-- Requires Erlang 17.5 and Elixir 1.0.4 on the host machine
+- Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
 - **You need to compile your application on the host machine before building this image**
 - Image size: **18.83MB**
 
 Dockerfile:
 
 ```
-FROM msaraiva/erlang:17.5
+FROM msaraiva/erlang:18.0.1
 
 ADD hello /usr/local/bin/hello
 
@@ -100,7 +100,7 @@ Run `docker images`. You should see something like:
 
 ```
 REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUAL SIZE
-hello                latest        dd650b702665       18 seconds ago      18.83 MB
+hello                latest        dd650b702665       18 seconds ago      19.44 MB
 ```
 
 
@@ -111,27 +111,13 @@ $ docker run --rm hello Docker
 Hello, Docker!
 ```
 
-If you want to manually install the erlang packages, you can replace the content of your `Dockerfile` with this:
-
-```
-FROM alpine:3.1
-
-RUN echo 'http://dl-4.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
-
-RUN apk --update add erlang erlang-crypto erlang-syntax-tools && rm -rf /var/cache/apk/*
-
-ADD hello /usr/local/bin/hello
-
-ENTRYPOINT ["/usr/local/bin/hello"]
-
-```
 
 ### <a name="hello-world-compilation-container"></a> Hello world (compilation inside the container)
 The same simple command line executable. But:
 
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **18.89MB**
+- Image size: **19.5MB**
 
 For this example, we'll be using [msaraiva/mix-escript-build](https://github.com/msaraiva/docker-alpine/blob/master/dockerfiles/mix-escript-build/Dockerfile/) as base image. This image uses the `ONBUILD` docker instruction to add project files required for compilation, just before the build. For more information about the `ONBUILD` instruction, check out the [Dockerfile Reference](https://docs.docker.com/reference/builder/#onbuild).
 
@@ -181,25 +167,31 @@ This is the hello phoenix application created when you run `mix phoenix.new hell
 - Source: <https://github.com/msaraiva/docker-alpine-examples/>
 - Built with `mix release`
 - Compilation on host machine
-- Requires Erlang 17.5 and Elixir 1.0.4 on the host machine
+- Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
 - **You need to generate a release on the host machine before building this image**
-- Image size: **22.55MB**
+- Image size: **23.16MB**
 
 
 Dockerfile:
 
 ```
-FROM msaraiva/erlang:17.5
+FROM msaraiva/erlang:18.0.1
 
 RUN apk --update add erlang-sasl && rm -rf /var/cache/apk/*
 
 ENV APP_NAME hello_phoenix
+ENV APP_VERSION "0.0.1"
 ENV PORT 4000
 
 RUN mkdir -p /$APP_NAME
 ADD rel/$APP_NAME/bin /$APP_NAME/bin
 ADD rel/$APP_NAME/lib /$APP_NAME/lib
-ADD rel/$APP_NAME/releases /$APP_NAME/releases
+ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot    /$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot
+ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel     /$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel
+ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.script  /$APP_NAME/releases/$APP_VERSION/$APP_NAME.script
+ADD rel/$APP_NAME/releases/$APP_VERSION/start.boot        /$APP_NAME/releases/$APP_VERSION/start.boot
+ADD rel/$APP_NAME/releases/$APP_VERSION/sys.config        /$APP_NAME/releases/$APP_VERSION/sys.config
+ADD rel/$APP_NAME/releases/$APP_VERSION/vm.args           /$APP_NAME/releases/$APP_VERSION/vm.args
 
 EXPOSE $PORT
 
@@ -228,24 +220,30 @@ A fork from Chris McCord's [phoenix_chat_example](https://github.com/chrismccord
 - Source: <https://github.com/msaraiva/phoenix_chat_example>
 - Built with `mix release`
 - Compilation on host machine
-- Requires Erlang 17.5 and Elixir 1.0.4 on the host machine
+- Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
 - **You need to generate a release on the host machine before building this image**
-- Image size: **22.86MB**
+- Image size: **23.47MB**
 
 Dockerfile:
 
 ```
-FROM msaraiva/erlang:17.5
+FROM msaraiva/erlang:18.0.1
 
 RUN apk --update add erlang-sasl && rm -rf /var/cache/apk/*
 
 ENV APP_NAME chat
+ENV APP_VERSION "0.0.1"
 ENV PORT 4000
 
 RUN mkdir -p /$APP_NAME
 ADD rel/$APP_NAME/bin /$APP_NAME/bin
 ADD rel/$APP_NAME/lib /$APP_NAME/lib
-ADD rel/$APP_NAME/releases /$APP_NAME/releases
+ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot    /$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot
+ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel     /$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel
+ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.script  /$APP_NAME/releases/$APP_VERSION/$APP_NAME.script
+ADD rel/$APP_NAME/releases/$APP_VERSION/start.boot        /$APP_NAME/releases/$APP_VERSION/start.boot
+ADD rel/$APP_NAME/releases/$APP_VERSION/sys.config        /$APP_NAME/releases/$APP_VERSION/sys.config
+ADD rel/$APP_NAME/releases/$APP_VERSION/vm.args           /$APP_NAME/releases/$APP_VERSION/vm.args
 
 EXPOSE $PORT
 
