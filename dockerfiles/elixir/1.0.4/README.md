@@ -3,7 +3,7 @@ Elixir on Alpine Linux
 From the official [website](http://elixir-lang.org/):
 > Elixir is a dynamic, functional language designed for building scalable and maintainable applications.
 
-Image size: **47.54 MB**
+Image size: **47.6 MB**
 
 The following packages are pre-installed:
 
