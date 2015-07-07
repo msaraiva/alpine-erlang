@@ -7,14 +7,14 @@ Image size: **47.6 MB**
 
 The following packages are pre-installed:
 
-- erlang + dependencies
-- erlang-inets
-- erlang-ssl
-- erlang-public-key
-- erlang-asn1
-- erlang-sasl
-- erlang-erl-interface
-- erlang-dev
+- erlang17 + dependencies
+- erlang17-inets
+- erlang17-ssl
+- erlang17-public-key
+- erlang17-asn1
+- erlang17-sasl
+- erlang17-erl-interface
+- erlang17-dev
 - elixir
 - wget
 - git + dependencies
