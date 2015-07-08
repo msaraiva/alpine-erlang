@@ -26,9 +26,9 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
   - [Installing Erlang with apk](#installing-erlang)
   - [Installing Elixir with apk](#installing-elixir)
 - [Docker images](#docker-images)
-  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-erlang/" target="_blank">msaraiva/alpine-erlang</a>
+  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-erlang-base/" target="_blank">msaraiva/alpine-erlang-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/erlang/" target="_blank">msaraiva/erlang</a>
-  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-elixir/" target="_blank">msaraiva/alpine-alixir</a>
+  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-elixir-base/" target="_blank">msaraiva/alpine-alixir-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir/" target="_blank">msaraiva/elixir</a>
   - msaraiva/lfe (TODO)
 - [Examples](#examples)
@@ -356,17 +356,17 @@ Some of those patches are related to musl, some to Busybox and some just split o
 
 Erlang packages:
 
-| Package  | Version | Build |   Smoke Tests       |    Complete test suites           | Maintainer     |   Repo  |
-|----------|:-------:|:-----:|:-------------------:|:---------------------------------:|----------------|:-------:|
-| Erlang17 |   17.5  |   OK  |         TODO        | [11475 passed, 108 failed][t0001] | Marlus Saraiva | testing |
-| Erlang   | 18.0.1  |   OK  |         TODO        | [12036 passed,  94 failed][t0002] | Marlus Saraiva | testing |
+| Package  | Version | Build |   Smoke Tests       |    Complete test suites           | Maintainer     |
+|----------|:-------:|:-----:|:-------------------:|:---------------------------------:|----------------|
+| Erlang17 |   17.5  |   OK  |         TODO        | [11475 passed, 108 failed][t0001] | Marlus Saraiva |
+| Erlang   | 18.0.1  |   OK  |         TODO        | [12036 passed,  94 failed][t0002] | Marlus Saraiva |
 
 Other packages, applications or libraries:
 
-| Package  | Version | Build |             Tests            | Maintainer     |   Repo  |
-|----------|:-------:|:-----:|:----------------------------:|----------------|:-------:|
-| Elixir   |  1.0.5  |   OK  |              OK              | Marlus Saraiva | testing |
-| Ejabberd |  15.04  |   OK  |             TODO             | John Regan     | testing |
+| Package  | Version | Build |             Tests            | Maintainer     |
+|----------|:-------:|:-----:|:----------------------------:|----------------|
+| Elixir   |  1.0.5  |   OK  |              OK              | Marlus Saraiva |
+| Ejabberd |  15.04  |   OK  |             TODO             | John Regan     |
 
 [t0001]: http://alpine-erlang-tests.s3-website-us-east-1.amazonaws.com/0001/
 [t0002]: http://alpine-erlang-tests.s3-website-us-east-1.amazonaws.com/0002/
@@ -386,7 +386,7 @@ Feedback is also very important. If you have something to share, fell free to op
   
 ## <a name="credits"></a> Credits
 
-  - John Regan (original maintainer of the Erlang packages)
+  - John Regan (former maintainer of the Erlang packages)
   - Peter Lemenkov (See the [patches](#patches))
   
 ## <a name="other-resources"></a> Other Resources and News
