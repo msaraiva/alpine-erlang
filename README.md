@@ -1,47 +1,75 @@
-Minimal Erlang/Elixir docker images with Alpine Linux
+Erlang/Elixir on Alpine Linux
 =====
 
-Alpine Linux is a lightweight Linux distribution built around musl libc and busybox.
+Alpine Linux is a lightweight Linux distribution built around **musl** libc and **busybox**.
 The main focus of this distribution is security, simplicity and resource efficiency.
-All that makes Alpine Linux perfect to work as base images for linux containers.
+All that makes Alpine Linux perfect to work as base images for linux **containers**.
+
+### Minimal docker images
 
 When creating a docker image, you probably want to minimize its size as much as possible. At the same time, you might want to have access to a full-featured package system with a large range of packages available. As far as I can see, Alpine Linux is the best choice for that.
 
-> **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. To see a full list of the packages, run `docker run --rm msaraiva/alpine-erlang:3.2 apk --update search 'erlang' | sort`
+### How minimal?
 
-I'll describe here some examples on how to create minimal docker images for Erlang/Elixir projects using Alpine Linux.
+```
+REPOSITORY                     TAG      IMAGE ID       CREATED           VIRTUAL SIZE
+msaraiva/phoenix_chat_example  latest   e2748af130aa   18 minutes ago    23.53 MB
+msaraiva/elixir                1.0.5    7cce889dd856   48 minutes ago    29.53 MB
+msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 MB
 
-### Index
+```
 
-- [Installing Erlang with apk](#installing-erlang)
-- [Installing Elixir with apk](#installing-elixir)
-- [Hello world (compilation on host machine)](#hello-world-compilation-host)
-- [Hello world (compilation inside the container)](#hello-world-compilation-container)
-- [Phoenix + Elixir Release Manager (exrm)](#phoenix-exrm)
-- [Hello Phoenix](#hello-phoenix)
-- [Phoenix Chat Example](#phoenix-chat)
-- [Hello NIF](#hello-nif)
-- [Building images for development](#build-for-dev)
-- [TODO](#todo)
-- [Other Resources](#other-resources)
+### Getting started
+
+- [Packages](#packages)
+  - [What is apk?](#what-is-apk)
+  - [Installing Erlang with apk](#installing-erlang)
+  - [Installing Elixir with apk](#installing-elixir)
+- [Docker images](#docker-images)
+  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-erlang/" target="_blank">msaraiva/alpine-erlang</a>
+  - <a href="https://registry.hub.docker.com/u/msaraiva/erlang/" target="_blank">msaraiva/erlang</a>
+  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-elixir/" target="_blank">msaraiva/alpine-alixir</a>
+  - <a href="https://registry.hub.docker.com/u/msaraiva/elixir/" target="_blank">msaraiva/elixir</a>
+  - msaraiva/lfe (TODO)
+- [Examples](#examples)
+  - Erlang
+    - Cowboy Hello World (TODO)
+  - Elixir
+    - [Hello world (compilation on host machine)](#hello-world-compilation-host)
+    - [Hello world (compilation inside the container)](#hello-world-compilation-container)
+    - [Phoenix + Elixir Release Manager (exrm)](#phoenix-exrm)
+    - [Hello Phoenix](#hello-phoenix)
+    - [Phoenix Chat Example](#phoenix-chat)
+    - [Hello NIF](#hello-nif)
+  - LFE (TODO)
+- [Building packages](building-packages)
+  - [Patches](#patches)
+  - [Build status and test results](build-status)
+- [Contributing](#contributing)
+- [Credits](#credits)
+- [Other Resources and News](#other-resources)
 
 
+## Packages
 
-> **Note:** All base images listed here are automated builds and their Dockerfiles can be found in the [dockerfiles](https://github.com/msaraiva/docker-alpine/tree/master/dockerfiles) folder.
+In order to keep packages as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. The full list of Erlang packages available can be found [here](http://pkgs.alpinelinux.org/packages?package=erlang%25&repo=all&arch=x86_64).
+
+
+### <a name="what-is-apk"></a> What is apk?
+
+The `apk` command is the official tool for package management on Alpine Linux. Something like `apt-get` on Ubuntu. More information about `apk` can be found [here](http://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management).
 
 ### <a name="installing-erlang"></a> Installing Erlang with apk
 
 Create a Dockerfile
 
 ```Dockerfile
-FROM msaraiva/alpine-erlang:3.2
+FROM msaraiva/alpine-erlang-base:3.2
 
 RUN apk --update add erlang && rm -rf /var/cache/apk/*
 
 CMD ["/bin/sh"]
 ```
-
-> **Note:** The `apk` command is the official tool for package management on Alpine Linux. Something like `apt-get` on Ubuntu. More information about `apk` can be found [here](http://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management).
 
 Build the image:
 
@@ -60,12 +88,19 @@ erlang               latest        d76965a1f753       4 seconds ago       16.78 
 ### <a name="installing-elixir"></a> Installing Elixir with apk
 
 ```Dockerfile
-FROM msaraiva/erlang:18.0.1
+FROM msaraiva/alpine-erlang-base:3.2
 
 RUN apk --update add elixir && rm -rf /var/cache/apk/*
 
 CMD ["/bin/sh"]
 ```
+
+## <a name="docker-images"></a> Docker Images
+> **Note:** All base images listed here are automated builds and their Dockerfiles can be found in the [dockerfiles](https://github.com/msaraiva/docker-alpine/tree/master/dockerfiles) folder.
+
+## <a name="examples"></a> Examples
+
+I'll describe here some examples on how to create minimal docker images for Erlang/Elixir projects using Alpine Linux.
 
 ### <a name="hello-world-compilation-host"></a> Hello world (compilation on host machine)
 A simple command line executable
@@ -75,12 +110,12 @@ A simple command line executable
 - Compilation on host machine
 - Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
 - **You need to compile your application on the host machine before building this image**
-- Image size: **18.83MB**
+- Image size: **19.5MB**
 
 Dockerfile:
 
-```
-FROM msaraiva/erlang:18.0.1
+```Dockerfile
+FROM msaraiva/alpine-elixir-base:18.0
 
 ADD hello /usr/local/bin/hello
 
@@ -89,7 +124,7 @@ ENTRYPOINT ["/usr/local/bin/hello"]
 
 Building:
 
-```
+```Dockerfile
 $ git clone https://github.com/msaraiva/docker-alpine-examples
 $ cd docker-alpine-examples/hello
 $ MIX_ENV=prod mix escript.build
@@ -100,7 +135,7 @@ Run `docker images`. You should see something like:
 
 ```
 REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUAL SIZE
-hello                latest        dd650b702665       18 seconds ago      19.44 MB
+hello                latest        dd650b702665       18 seconds ago      19.5 MB
 ```
 
 
@@ -117,8 +152,8 @@ The same simple command line executable. But:
 
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **19.5MB**
-
+- Image size: **19.55MB**
+ex
 For this example, we'll be using [msaraiva/mix-escript-build](https://github.com/msaraiva/docker-alpine/blob/master/dockerfiles/mix-escript-build/Dockerfile/) as base image. This image uses the `ONBUILD` docker instruction to add project files required for compilation, just before the build. For more information about the `ONBUILD` instruction, check out the [Dockerfile Reference](https://docs.docker.com/reference/builder/#onbuild).
 
 Dockerfile:
@@ -169,13 +204,13 @@ This is the hello phoenix application created when you run `mix phoenix.new hell
 - Compilation on host machine
 - Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
 - **You need to generate a release on the host machine before building this image**
-- Image size: **23.16MB**
+- Image size: **23.21MB**
 
 
 Dockerfile:
 
-```
-FROM msaraiva/erlang:18.0.1
+```Dockerfile
+FROM msaraiva/alpine-elixir-base:18.0
 
 RUN apk --update add erlang-sasl && rm -rf /var/cache/apk/*
 
@@ -222,12 +257,12 @@ A fork from Chris McCord's [phoenix_chat_example](https://github.com/chrismccord
 - Compilation on host machine
 - Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
 - **You need to generate a release on the host machine before building this image**
-- Image size: **23.47MB**
+- Image size: **23.53MB**
 
 Dockerfile:
 
-```
-FROM msaraiva/erlang:18.0.1
+```Dockerfile
+FROM msaraiva/alpine-elixir-base:18.0
 
 RUN apk --update add erlang-sasl && rm -rf /var/cache/apk/*
 
@@ -276,7 +311,7 @@ A simple command line executable that calculates a dot product of two lists on a
 - NIF compiled with GCC
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **18.78MB**
+- Image size: **19.44MB**
 
 Compiling:
 
@@ -299,68 +334,64 @@ Hello! This dot product was calculated by a NIF:
 [1.0, 2.0, 3.0] x [5.0, 10.0, 20.0] = 85.0
 ```
 
+## <a name="building-packages"></a> Building packages
+
+You can see how packages are built by looking at the APKBUILD scripts:
+
+- [Erlang 17.5](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang17/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
+- [Erlang 18.0](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
+- [Elixir 1.0.5](http://git.alpinelinux.org/cgit/aports/tree/testing/elixir/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
+
+For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
+
+### <a name="patches"></a> Patches
+
+If you take a look at the APKBUILD scripts, you'll notice that some patches are applied in order to build the packages.
+Some of those patches are related to musl, some to Busybox and some just split or remove stuff to make packages smaller.
+ - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
+ - [Patches for Elixir](http://git.alpinelinux.org/cgit/aports/tree/testing/elixir?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
 
 
+### <a name="build-status"></a> Build status and test results
 
-## <a name="build-for-dev"></a> Building images for development
+Erlang packages:
 
-In case you want to create images for development, you'll need to install git and wget. This way, mix can properly download and compile all dependencies. Check out the Dockerfile from [msaraiva/elixir](https://registry.hub.docker.com/u/msaraiva/elixir/):
+| Package  | Version | Build |   Smoke Tests       |    Complete test suites           | Maintainer     |   Repo  |
+|----------|:-------:|:-----:|:-------------------:|:---------------------------------:|----------------|:-------:|
+| Erlang17 |   17.5  |   OK  |         TODO        | [11475 passed, 108 failed][t0001] | Marlus Saraiva | testing |
+| Erlang   | 18.0.1  |   OK  |         TODO        | [12036 passed,  94 failed][t0002] | Marlus Saraiva | testing |
 
-```
-FROM msaraiva/erlang:17.5
-MAINTAINER Marlus Saraiva <marlus.saraiva@gmail.com>
+Other packages, applications or libraries:
 
-RUN apk --update add elixir wget git && rm -rf /var/cache/apk/*
+| Package  | Version | Build |             Tests            | Maintainer     |   Repo  |
+|----------|:-------:|:-----:|:----------------------------:|----------------|:-------:|
+| Elixir   |  1.0.5  |   OK  |              OK              | Marlus Saraiva | testing |
+| Ejabberd |  15.04  |   OK  |             TODO             | John Regan     | testing |
 
-RUN mix local.hex --force && \
-    mix local.rebar --force
+[t0001]: http://alpine-erlang-tests.s3-website-us-east-1.amazonaws.com/0001/
+[t0002]: http://alpine-erlang-tests.s3-website-us-east-1.amazonaws.com/0002/
 
-CMD ["/bin/sh"]
-```
+## <a name="contributing"></a> Contributing
 
-The Dockerfile above creates an image of **47.54MB**.
+I'll definitely need help to keep this project alive, so contributions are more than welcome. There're a lot of ways to contribute:
 
-Running:
+- Compiling and testing other projects based on Erlang
+- Maintaining packages or creating new ones
+- Patching existing packages
+- Creating or improving docker images
+- Creating new examples
+- Improving this page
+  
+Feedback is also very important. If you have something to share, fell free to open an issue.
+  
+## <a name="credits"></a> Credits
 
-```
-$ docker run --rm -it msaraiva/elixir
-$ git clone https://github.com/msaraiva/docker-alpine-examples
-$ cd docker-alpine-examples/hello
-$ mix deps.get
-$ mix escript.build
-$ ./hello Docker
-Hello, Docker!
-```
+  - John Regan (original maintainer of the Erlang packages)
+  - Peter Lemenkov (See the [patches](#patches))
+  
+## <a name="other-resources"></a> Other Resources and News
 
-You can use the above image as base image for your own Dockerfile. Add more packages so you can customize your environment as much as you need. Here is an example:
-
-Dockerfile from <https://github.com/msaraiva/docker-alpine-examples/blob/master/elixir-dev/>:
-
-```
-FROM msaraiva/elixir
-
-RUN apk --update add bash vim git-bash-completion && \
-    rm -rf /var/cache/apk/*
-
-RUN git clone https://github.com/elixir-lang/vim-elixir.git ~/.vim
-
-RUN curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
-
-ADD prompt.sh /etc/profile.d/prompt.sh
-ADD aliases.sh /etc/profile.d/aliases.sh
-ADD gitconfig /root/.gitconfig
-
-CMD ["/bin/bash", "-l"]
-```
-
-## <a name="todo"></a> TODO
-* Erlang examples
-
-
-## <a name="other-resources"></a> Other Resources
-
-* <http://www.alpinelinux.org/about/>
+* <https://twitter.com/MarlusSaraiva>
+* <http://www.alpinelinux.org>
+* <https://registry.hub.docker.com/u/library/alpine/>
 * <https://github.com/gliderlabs/docker-alpine>
-* <http://gliderlabs.viewdocs.io/docker-alpine>
-* [@MarlusSaraiva](https://twitter.com/MarlusSaraiva) :)
-
