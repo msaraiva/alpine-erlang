@@ -1,4 +1,4 @@
-FROM msaraiva/erlang:18.0.1
+FROM msaraiva/alpine-elixir-base:18.0
 MAINTAINER Marlus Saraiva <marlus.saraiva@gmail.com>
 
 ONBUILD ADD config/  /app/config/

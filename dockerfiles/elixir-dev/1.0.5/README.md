@@ -1,11 +1,11 @@
-Elixir on Alpine Linux
+Elixir on Alpine Linux + basic development tools
 =====
 
 Elixir is a dynamic, functional language designed for building scalable and maintainable applications.
 
-Image size: **29.53 MB**
+Image size: **48.12 MB**
 
-> **Notice:** This image does not contain git, wget, rebar or hex. If you need to download dependencies or compile anything, see [msaraiva/elixir-dev](https://registry.hub.docker.com/u/msaraiva/elixir-dev/)
+> **Notice:** If you don't need to download dependencies or compile anything, you can use [msaraiva/elxir](https://registry.hub.docker.com/u/msaraiva/elixir/) which is much smaller.
 
 The following packages are pre-installed:
 
@@ -18,13 +18,17 @@ The following packages are pre-installed:
 - erlang-erl-interface
 - erlang-dev
 - elixir
+- wget
+- git + dependencies
+- rebar
+- hex
 
-> **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. The full list of Erlang packages available can be found [here](http://pkgs.alpinelinux.org/packages?package=erlang%25&repo=all&arch=x86_64)
+> **Notice:** In order to keep images as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. The full list of Erlang packages available can be found [here](http://pkgs.alpinelinux.org/packages?package=erlang%25&repo=all&arch=x86_64).
 
 ## Usage
 
 ```
-FROM msaraiva/elixir
+FROM msaraiva/elixir-dev
 
 RUN apk --update add bash vim git-bash-completion && \
     rm -rf /var/cache/apk/*
@@ -39,4 +43,3 @@ ADD gitconfig /root/.gitconfig
 
 CMD ["/bin/bash", "-l"]
 ```
-
