@@ -30,6 +30,8 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
   - <a href="https://registry.hub.docker.com/u/msaraiva/erlang/" target="_blank">msaraiva/erlang</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-elixir-base/" target="_blank">msaraiva/alpine-alixir-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir/" target="_blank">msaraiva/elixir</a>
+  - <a href="https://registry.hub.docker.com/u/msaraiva/elixir-dev/" target="_blank">msaraiva/elixir-dev</a>
+  - <a href="https://registry.hub.docker.com/u/msaraiva/elixir-gcc/" target="_blank">msaraiva/elixir-gcc</a>
   - msaraiva/lfe (TODO)
 - [Examples](#examples)
   - Erlang
