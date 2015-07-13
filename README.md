@@ -28,11 +28,13 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
 - [Docker images](#docker-images)
   - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-erlang-base/" target="_blank">msaraiva/alpine-erlang-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/erlang/" target="_blank">msaraiva/erlang</a>
+  - msaraiva/erlang-dev (TODO)
   - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-elixir-base/" target="_blank">msaraiva/alpine-alixir-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir/" target="_blank">msaraiva/elixir</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir-dev/" target="_blank">msaraiva/elixir-dev</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir-gcc/" target="_blank">msaraiva/elixir-gcc</a>
   - msaraiva/lfe (TODO)
+  - msaraiva/lfe-dev (TODO)
 - [Examples](#examples)
   - Erlang
     - Cowboy Hello World (TODO)
@@ -350,8 +352,8 @@ For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
 
 If you take a look at the APKBUILD scripts, you'll notice that some patches are applied in order to build the packages.
 Some of those patches are related to musl, some to Busybox and some just split or remove stuff to make packages smaller.
- - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
- - [Patches for Elixir](http://git.alpinelinux.org/cgit/aports/tree/testing/elixir?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
+ - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang)
+ - [Patches for Elixir](http://git.alpinelinux.org/cgit/aports/tree/testing/elixir)
 
 
 ### <a name="build-status"></a> Build status and test results
@@ -375,7 +377,7 @@ Other packages, applications or libraries:
 
 ## <a name="contributing"></a> Contributing
 
-I'll definitely need help to keep this project alive, so contributions are more than welcome. There're a lot of ways to contribute:
+Contributions are more than welcome. There're a lot of ways to contribute:
 
 - Compiling and testing other projects based on Erlang
 - Maintaining packages or creating new ones
@@ -389,7 +391,7 @@ Feedback is also very important. If you have something to share, fell free to op
 ## <a name="credits"></a> Credits
 
   - John Regan (former maintainer of the Erlang packages)
-  - Peter Lemenkov (See the [patches](#patches))
+  - Peter Lemenkov (See [Erlang patches 0001-0007](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang))
   
 ## <a name="other-resources"></a> Other Resources and News
 
