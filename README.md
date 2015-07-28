@@ -1,4 +1,4 @@
-Erlang/Elixir on Alpine Linux
+teErlang/Elixir on Alpine Linux
 =====
 
 Alpine Linux is a lightweight Linux distribution built around **musl** libc and **busybox**.
@@ -343,8 +343,8 @@ Hello! This dot product was calculated by a NIF:
 You can see how packages are built by looking at the APKBUILD scripts:
 
 - [Erlang 17.5](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang17/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
-- [Erlang 18.0](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
-- [Elixir 1.0.5](http://git.alpinelinux.org/cgit/aports/tree/testing/elixir/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
+- [Erlang 18.0.2](http://git.alpinelinux.org/cgit/aports/tree/main/erlang/APKBUILD)
+- [Elixir 1.0.5](http://git.alpinelinux.org/cgit/aports/tree/main/elixir/APKBUILD)
 
 For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
 
@@ -352,9 +352,8 @@ For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
 
 If you take a look at the APKBUILD scripts, you'll notice that some patches are applied in order to build the packages.
 Some of those patches are related to musl, some to Busybox and some just split or remove stuff to make packages smaller.
- - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang)
- - [Patches for Elixir](http://git.alpinelinux.org/cgit/aports/tree/testing/elixir)
-
+ - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/main/erlang)
+ 
 
 ### <a name="build-status"></a> Build status and test results
 
@@ -388,7 +387,7 @@ Feedback is also very important. If you have something to share, fell free to op
 ## <a name="credits"></a> Credits
 
   - John Regan (former maintainer of the Erlang packages)
-  - Peter Lemenkov (See [Erlang patches 0001-0007](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang))
+  - Peter Lemenkov (See [Erlang patches 0001-0007](http://git.alpinelinux.org/cgit/aports/tree/main/erlang))
   
 ## <a name="other-resources"></a> Other Resources and News
 
