@@ -362,8 +362,8 @@ Erlang packages:
 
 | Package  | Version | Build |   Smoke Tests       |    Complete test suites           | Maintainer     |
 |----------|:-------:|:-----:|:-------------------:|:---------------------------------:|----------------|
-| Erlang17 |   17.5  |   OK  |         TODO        | [11475 passed, 108 failed][t0001] | Marlus Saraiva |
-| Erlang   | 18.0.1  |   OK  |         TODO        | [12036 passed,  94 failed][t0002] | Marlus Saraiva |
+| Erlang17 |   17.5  |   OK  |         TODO        |            TODO                   | Marlus Saraiva |
+| Erlang   | 18.0.1  |   OK  |         TODO        |            TODO                   | Marlus Saraiva |
 
 Other packages, applications or libraries:
 
@@ -371,9 +371,6 @@ Other packages, applications or libraries:
 |----------|:-------:|:-----:|:----------------------------:|----------------|
 | Elixir   |  1.0.5  |   OK  |              OK              | Marlus Saraiva |
 | Ejabberd |  15.04  |   OK  |             TODO             | John Regan     |
-
-[t0001]: http://alpine-erlang-tests.s3-website-us-east-1.amazonaws.com/0001/
-[t0002]: http://alpine-erlang-tests.s3-website-us-east-1.amazonaws.com/0002/
 
 ## <a name="contributing"></a> Contributing
 
