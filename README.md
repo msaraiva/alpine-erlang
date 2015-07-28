@@ -362,7 +362,7 @@ Erlang packages:
 | Package  | Version | Build |   Smoke Tests       |    Complete test suites           | Maintainer     |
 |----------|:-------:|:-----:|:-------------------:|:---------------------------------:|----------------|
 | Erlang17 |   17.5  |   OK  |         TODO        |            TODO                   | Marlus Saraiva |
-| Erlang   | 18.0.1  |   OK  |         TODO        |            TODO                   | Marlus Saraiva |
+| Erlang   | 18.0.2  |   OK  |         TODO        |            TODO                   | Marlus Saraiva |
 
 Other packages, applications or libraries:
 
