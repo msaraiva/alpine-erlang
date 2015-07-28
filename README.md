@@ -1,4 +1,4 @@
-teErlang/Elixir on Alpine Linux
+Erlang/Elixir on Alpine Linux
 =====
 
 Alpine Linux is a lightweight Linux distribution built around **musl** libc and **busybox**.
