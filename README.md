@@ -19,12 +19,13 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
 
 ```
 
-### Getting started
+## Getting started
 
 - [Packages](#packages)
   - [What is apk?](#what-is-apk)
-  - [Installing Erlang with apk](#installing-erlang)
-  - [Installing Elixir with apk](#installing-elixir)
+  - [Installing packages with apk](#installing-packages)
+  - [Available packages](#available-packages)
+  - [Building packages](#building-packages)
 - [Docker images](#docker-images)
   - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-erlang-base/" target="_blank">msaraiva/alpine-erlang-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/erlang/" target="_blank">msaraiva/erlang</a>
@@ -46,9 +47,6 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
     - [Phoenix Chat Example](#phoenix-chat)
     - [Hello NIF](#hello-nif)
   - LFE (TODO)
-- [Building packages](#building-packages)
-  - [Patches](#patches)
-  - [Build status and test results](#build-status)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [Other Resources and News](#other-resources)
@@ -63,7 +61,7 @@ In order to keep packages as compact as possible, Erlang libraries for Alpine Li
 
 The `apk` command is the official tool for package management on Alpine Linux. Something like `apt-get` on Ubuntu. More information about `apk` can be found [here](http://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management).
 
-### <a name="installing-erlang"></a> Installing Erlang with apk
+### <a name="installing-packages"></a> Installing packages with apk
 
 Create a Dockerfile
 
@@ -88,16 +86,40 @@ REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUA
 erlang               latest        d76965a1f753       4 seconds ago       16.78 MB
 ```
 
+### <a name="available-packages"></a> Available packages
 
-### <a name="installing-elixir"></a> Installing Elixir with apk
+Erlang packages:
 
-```Dockerfile
-FROM msaraiva/alpine-erlang-base:3.2
+| Package  | Version | Build |   Smoke Tests       |    Repository    | Maintainer     |
+|----------|:-------:|:-----:|:-------------------:|:----------------:|----------------|
+| Erlang17 |   17.5  |   OK  |         TODO        |    testing       | Marlus Saraiva |
+| Erlang   | 18.0.2  |   OK  |         TODO        |    main          | Marlus Saraiva |
 
-RUN apk --update add elixir && rm -rf /var/cache/apk/*
+Other packages, applications or libraries:
 
-CMD ["/bin/sh"]
-```
+| Package  | Version | Build |      Tests       |    Repository    | Maintainer     |
+|----------|:-------:|:-----:|:----------------:|:----------------:|----------------|
+| Elixir   |  1.0.5  |   OK  |       OK         |    main          | Marlus Saraiva |
+| Ejabberd |  15.04  |   OK  |      TODO        |    testing       | John Regan     |
+
+
+### <a name="building-packages"></a> Building packages
+
+You can see how packages are built by looking at the APKBUILD scripts:
+
+- [Erlang 17.5](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang17/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
+- [Erlang 18.0.2](http://git.alpinelinux.org/cgit/aports/tree/main/erlang/APKBUILD)
+- [Elixir 1.0.5](http://git.alpinelinux.org/cgit/aports/tree/main/elixir/APKBUILD)
+
+For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
+
+### <a name="patches"></a> Patches
+
+If you take a look at the APKBUILD scripts, you'll notice that some patches are applied in order to successfully build the packages.
+Some of those patches are related to musl, some to Busybox and some just split or remove stuff to make packages smaller.
+ - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/main/erlang)
+ 
+
 
 ## <a name="docker-images"></a> Docker Images
 > **Note:** All base images listed here are automated builds and their Dockerfiles can be found in the [dockerfiles](https://github.com/msaraiva/docker-alpine/tree/master/dockerfiles) folder.
@@ -337,39 +359,6 @@ $ docker run --rm hello_nif
 Hello! This dot product was calculated by a NIF:
 [1.0, 2.0, 3.0] x [5.0, 10.0, 20.0] = 85.0
 ```
-
-## <a name="building-packages"></a> Building packages
-
-You can see how packages are built by looking at the APKBUILD scripts:
-
-- [Erlang 17.5](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang17/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
-- [Erlang 18.0.2](http://git.alpinelinux.org/cgit/aports/tree/main/erlang/APKBUILD)
-- [Elixir 1.0.5](http://git.alpinelinux.org/cgit/aports/tree/main/elixir/APKBUILD)
-
-For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
-
-### <a name="patches"></a> Patches
-
-If you take a look at the APKBUILD scripts, you'll notice that some patches are applied in order to build the packages.
-Some of those patches are related to musl, some to Busybox and some just split or remove stuff to make packages smaller.
- - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/main/erlang)
- 
-
-### <a name="build-status"></a> Build status and test results
-
-Erlang packages:
-
-| Package  | Version | Build |   Smoke Tests       |    Complete test suites           | Maintainer     |
-|----------|:-------:|:-----:|:-------------------:|:---------------------------------:|----------------|
-| Erlang17 |   17.5  |   OK  |         TODO        |            TODO                   | Marlus Saraiva |
-| Erlang   | 18.0.2  |   OK  |         TODO        |            TODO                   | Marlus Saraiva |
-
-Other packages, applications or libraries:
-
-| Package  | Version | Build |             Tests            | Maintainer     |
-|----------|:-------:|:-----:|:----------------------------:|----------------|
-| Elixir   |  1.0.5  |   OK  |              OK              | Marlus Saraiva |
-| Ejabberd |  15.04  |   OK  |             TODO             | John Regan     |
 
 ## <a name="contributing"></a> Contributing
 
