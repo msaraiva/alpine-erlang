@@ -13,8 +13,8 @@ When creating a docker image, you probably want to minimize its size as much as 
 
 ```
 REPOSITORY                     TAG      IMAGE ID       CREATED           VIRTUAL SIZE
-msaraiva/phoenix_chat_example  latest   e2748af130aa   18 minutes ago    23.53 MB
-msaraiva/elixir                1.0.5    7cce889dd856   48 minutes ago    29.53 MB
+msaraiva/phoenix_chat_example  latest   e2748af130aa   18 minutes ago    23.52 MB
+msaraiva/elixir                1.0.5    7cce889dd856   48 minutes ago    21.44 MB
 msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 MB
 
 ```
@@ -139,7 +139,7 @@ Run `docker images`. You should see something like:
 
 ```
 REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUAL SIZE
-hello                latest        dd650b702665       18 seconds ago      19.5 MB
+hello                latest        dd650b702665       18 seconds ago      19.49 MB
 ```
 
 
@@ -156,7 +156,7 @@ The same simple command line executable. But:
 
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **19.55MB**
+- Image size: **19.56MB**
 ex
 For this example, we'll be using [msaraiva/mix-escript-build](https://github.com/msaraiva/docker-alpine/blob/master/dockerfiles/mix-escript-build/Dockerfile/) as base image. This image uses the `ONBUILD` docker instruction to add project files required for compilation, just before the build. For more information about the `ONBUILD` instruction, check out the [Dockerfile Reference](https://docs.docker.com/reference/builder/#onbuild).
 
@@ -261,7 +261,7 @@ A fork from Chris McCord's [phoenix_chat_example](https://github.com/chrismccord
 - Compilation on host machine
 - Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
 - **You need to generate a release on the host machine before building this image**
-- Image size: **23.53MB**
+- Image size: **23.52MB**
 
 Dockerfile:
 
