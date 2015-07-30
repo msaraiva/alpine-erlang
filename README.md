@@ -19,7 +19,7 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
 
 ```
 
-## Getting started
+## Getting started (WIP)
 
 - [Packages](#packages)
   - [What is apk?](#what-is-apk)
