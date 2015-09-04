@@ -49,6 +49,7 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
   - LFE (TODO)
 - [Contributing](#contributing)
 - [Credits](#credits)
+- [Related Projects](#related-projects)
 - [Other Resources and News](#other-resources)
 
 
@@ -377,7 +378,11 @@ Feedback is also very important. If you have something to share, fell free to op
 
   - John Regan (former maintainer of the Erlang packages)
   - Peter Lemenkov (See [Erlang patches 0001-0007](http://git.alpinelinux.org/cgit/aports/tree/main/erlang))
-  
+
+## <a name="related-projects"></a> Related Projects
+
+- [Elixir Docker Image Packager (EDIP)](https://github.com/asaaki/elixir-docker-image-packager) by Christoph Grabo  ([asaaki](https://github.com/asaaki))
+
 ## <a name="other-resources"></a> Other Resources and News
 
 * <https://twitter.com/MarlusSaraiva>
