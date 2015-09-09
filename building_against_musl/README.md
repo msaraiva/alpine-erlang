@@ -1,10 +1,10 @@
 Building Erlang/OTP against musl libc
 =====
 
-I'll be using Alpine Lixux here to describe how to build Erlang against musl libc. In case you want to use any other distribution, make sure you find and install all the corresponding dependencies.
+I'll be using Alpine Linux here to describe how to build Erlang/OTP against musl libc. In case you want to use any other distribution, make sure you install all the corresponding dependencies.
 
 ### Using Docker
-I'll also be using docker to get started with a clean linux environment. In case you already have Alpine Linux installed, you can skip this part.
+I'll be also using docker, so we can start with a clean linux environment. In case you already have Alpine Linux installed, you can skip this part.
 
 ```
 docker run -it alpine:3.2 /bin/sh
@@ -46,9 +46,9 @@ export CPPFLAGS="-D_BSD_SOURCE $CPPFLAGS"
 ```
 
 ### Applying patches
-This is probably the most important part of this tutorial. In order to make your life easier, I placed all the patches you need in the patches folder.
+This is probably the most important part of this tutorial. In order to make your life easier, I placed all the patches you need in the [patches](https://github.com/msaraiva/alpine-erlang/tree/master/building_against_musl/patches) folder.
 
-> **Notice:** When building the official Erlang packages for Alpine Linux, other patches are also applied. Some of them are related to Busybox and some just split or remove stuff to make packages smaller. For this tutorial I'm only applying those necessary to have a successful build. In case you want apply any of the other patches, you can download them from: <http://git.alpinelinux.org/cgit/aports/tree/main/erlang>
+> **Notice:** When building the official Erlang packages for Alpine Linux, other patches are also applied. Some of them are related to Busybox and some just split or remove stuff to make packages smaller. For this tutorial I'm only applying those necessary to have a successful build. In case you want to apply any of the other patches, you can download them from: <http://git.alpinelinux.org/cgit/aports/tree/main/erlang>
 
 
 
