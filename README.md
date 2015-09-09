@@ -47,6 +47,7 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
     - [Phoenix Chat Example](#phoenix-chat)
     - [Hello NIF](#hello-nif)
   - LFE (TODO)
+- [Building Erlang/OTP against musl libc](https://github.com/msaraiva/alpine-erlang/tree/master/building_against_musl)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [Related Projects](#related-projects)
