@@ -24,13 +24,10 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
 - [Packages](#packages)
   - [What is apk?](#what-is-apk)
   - [Installing packages with apk](#installing-packages)
-  - [Available packages](#available-packages)
   - [Building packages](#building-packages)
 - [Docker images](#docker-images)
-  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-erlang-base/" target="_blank">msaraiva/alpine-erlang-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/erlang/" target="_blank">msaraiva/erlang</a>
   - msaraiva/erlang-dev (TODO)
-  - <a href="https://registry.hub.docker.com/u/msaraiva/alpine-elixir-base/" target="_blank">msaraiva/alpine-alixir-base</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir/" target="_blank">msaraiva/elixir</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir-dev/" target="_blank">msaraiva/elixir-dev</a>
   - <a href="https://registry.hub.docker.com/u/msaraiva/elixir-gcc/" target="_blank">msaraiva/elixir-gcc</a>
@@ -44,7 +41,6 @@ msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 M
     - [Hello world (compilation inside the container)](#hello-world-compilation-container)
     - [Phoenix + Elixir Release Manager (exrm)](#phoenix-exrm)
     - [Hello Phoenix](#hello-phoenix)
-    - [Phoenix Chat Example](#phoenix-chat)
     - [Hello NIF](#hello-nif)
   - LFE (TODO)
 - [Contributing](#contributing)
@@ -67,7 +63,7 @@ The `apk` command is the official tool for package management on Alpine Linux. S
 Create a Dockerfile
 
 ```Dockerfile
-FROM msaraiva/alpine-erlang-base:3.2
+FROM alpine:3.3
 
 RUN apk --update add erlang && rm -rf /var/cache/apk/*
 
@@ -84,33 +80,15 @@ Run `docker images`. You should see something like:
 
 ```
 REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUAL SIZE
-erlang               latest        d76965a1f753       4 seconds ago       16.78 MB
+erlang               latest        d76965a1f753       4 seconds ago       18.3 MB
 ```
-
-### <a name="available-packages"></a> Available packages
-
-Erlang packages:
-
-| Package  | Version | Build |   Smoke Tests       |    Repository    | Maintainer     |
-|----------|:-------:|:-----:|:-------------------:|:----------------:|----------------|
-| Erlang17 |   17.5  |   OK  |         TODO        |    testing       | Marlus Saraiva |
-| Erlang   | 18.0.2  |   OK  |         TODO        |    main          | Marlus Saraiva |
-
-Other packages, applications or libraries:
-
-| Package  | Version | Build |      Tests       |    Repository    | Maintainer     |
-|----------|:-------:|:-----:|:----------------:|:----------------:|----------------|
-| Elixir   |  1.0.5  |   OK  |       OK         |    main          | Marlus Saraiva |
-| Ejabberd |  15.04  |   OK  |      TODO        |    testing       | John Regan     |
-
 
 ### <a name="building-packages"></a> Building packages
 
 You can see how packages are built by looking at the APKBUILD scripts:
 
-- [Erlang 17.5](http://git.alpinelinux.org/cgit/aports/tree/testing/erlang17/APKBUILD?id=d353b4d850cc0ad9c4a99251e8d9e734080a49b5)
-- [Erlang 18.0.2](http://git.alpinelinux.org/cgit/aports/tree/main/erlang/APKBUILD)
-- [Elixir 1.0.5](http://git.alpinelinux.org/cgit/aports/tree/main/elixir/APKBUILD)
+- [Erlang](http://git.alpinelinux.org/cgit/aports/tree/community/erlang/APKBUILD)
+- [Elixir](http://git.alpinelinux.org/cgit/aports/tree/community/elixir/APKBUILD)
 
 For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
 
@@ -119,7 +97,6 @@ For more info, see <http://wiki.alpinelinux.org/wiki/APKBUILD_Reference>
 If you take a look at the APKBUILD scripts, you'll notice that some patches are applied in order to successfully build the packages.
 Some of those patches are related to musl, some to Busybox and some just split or remove stuff to make packages smaller.
  - [Patches for Erlang](http://git.alpinelinux.org/cgit/aports/tree/main/erlang)
- 
 
 
 ## <a name="docker-images"></a> Docker Images
@@ -135,14 +112,14 @@ A simple command line executable
 - Source: <https://github.com/msaraiva/docker-alpine-examples/>
 - Built with `mix escript.build`
 - Compilation on host machine
-- Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
+- Requires Erlang 18.1 and Elixir >= 1.1.1 on the host machine
 - **You need to compile your application on the host machine before building this image**
-- Image size: **19.5MB**
+- Image size: **20.75MB**
 
 Dockerfile:
 
 ```Dockerfile
-FROM msaraiva/alpine-elixir-base:18.0
+FROM msaraiva/erlang:18.1
 
 ADD hello /usr/local/bin/hello
 
@@ -162,7 +139,7 @@ Run `docker images`. You should see something like:
 
 ```
 REPOSITORY           TAG           IMAGE ID           CREATED             VIRTUAL SIZE
-hello                latest        dd650b702665       18 seconds ago      19.49 MB
+hello                latest        ab3d45ddf551       18 seconds ago      20.75 MB
 ```
 
 
@@ -172,7 +149,6 @@ Running:
 $ docker run --rm hello Docker
 Hello, Docker!
 ```
-
 
 ### <a name="hello-world-compilation-container"></a> Hello world (compilation inside the container)
 The same simple command line executable. But:
@@ -219,7 +195,7 @@ By default, `exrm` pulls the Erlang runtime system from the build environment. T
 2. Gererate the release inside Alpine Linux
 
 > **Note:** To instruct `exrm` to exclude the Erlang runtime from the release, we need to create a file called `rel/relx.config` with this content: `{include_erts, false}.`.
-  
+
 Let's see how we can do this.
 
 ### <a name="hello-phoenix"></a> Hello Phoenix
@@ -237,9 +213,9 @@ This is the hello phoenix application created when you run `mix phoenix.new hell
 Dockerfile:
 
 ```Dockerfile
-FROM msaraiva/alpine-elixir-base:18.0
+FROM msaraiva/erlang:18.1
 
-RUN apk --update add erlang-sasl && rm -rf /var/cache/apk/*
+RUN apk --update add erlang-crypto erlang-sasl && rm -rf /var/cache/apk/*
 
 ENV APP_NAME hello_phoenix
 ENV APP_VERSION "0.0.1"
@@ -248,6 +224,8 @@ ENV PORT 4000
 RUN mkdir -p /$APP_NAME
 ADD rel/$APP_NAME/bin /$APP_NAME/bin
 ADD rel/$APP_NAME/lib /$APP_NAME/lib
+ADD rel/$APP_NAME/releases/start_erl.data                 /$APP_NAME/releases/start_erl.data
+ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.sh      /$APP_NAME/releases/$APP_VERSION/$APP_NAME.sh
 ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot    /$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot
 ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel     /$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel
 ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.script  /$APP_NAME/releases/$APP_VERSION/$APP_NAME.script
@@ -273,60 +251,6 @@ Running:
 
 ```
 $ docker run --rm -p 4000:4000 hello_phoenix
-```
-
-### <a name="phoenix-chat"></a> Phoenix Chat Example
-
-A fork from Chris McCord's [phoenix_chat_example](https://github.com/chrismccord/phoenix_chat_example).
-
-- Source: <https://github.com/msaraiva/phoenix_chat_example>
-- Built with `mix release`
-- Compilation on host machine
-- Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
-- **You need to generate a release on the host machine before building this image**
-- Image size: **23.52MB**
-
-Dockerfile:
-
-```Dockerfile
-FROM msaraiva/alpine-elixir-base:18.0
-
-RUN apk --update add erlang-sasl && rm -rf /var/cache/apk/*
-
-ENV APP_NAME chat
-ENV APP_VERSION "0.0.1"
-ENV PORT 4000
-
-RUN mkdir -p /$APP_NAME
-ADD rel/$APP_NAME/bin /$APP_NAME/bin
-ADD rel/$APP_NAME/lib /$APP_NAME/lib
-ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot    /$APP_NAME/releases/$APP_VERSION/$APP_NAME.boot
-ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel     /$APP_NAME/releases/$APP_VERSION/$APP_NAME.rel
-ADD rel/$APP_NAME/releases/$APP_VERSION/$APP_NAME.script  /$APP_NAME/releases/$APP_VERSION/$APP_NAME.script
-ADD rel/$APP_NAME/releases/$APP_VERSION/start.boot        /$APP_NAME/releases/$APP_VERSION/start.boot
-ADD rel/$APP_NAME/releases/$APP_VERSION/sys.config        /$APP_NAME/releases/$APP_VERSION/sys.config
-ADD rel/$APP_NAME/releases/$APP_VERSION/vm.args           /$APP_NAME/releases/$APP_VERSION/vm.args
-
-EXPOSE $PORT
-
-CMD trap exit TERM; /$APP_NAME/bin/$APP_NAME foreground & wait
-```
-
-
-Building:
-
-```
-$ git clone https://github.com/msaraiva/phoenix_chat_example
-$ cd phoenix_chat_example
-$ mix deps.get
-$ MIX_ENV=prod mix release
-$ docker build -t msaraiva/phoenix_chat_example .
-```
-
-Running:
-
-```
-$ docker run --rm -p 4000:4000 msaraiva/phoenix_chat_example
 ```
 
 ### <a name="hello-nif"></a> Hello NIF
@@ -371,9 +295,9 @@ Contributions are more than welcome. There're a lot of ways to contribute:
 - Creating or improving docker images
 - Creating new examples
 - Improving this page
-  
+
 Feedback is also very important. If you have something to share, fell free to open an issue.
-  
+
 ## <a name="credits"></a> Credits
 
   - John Regan (former maintainer of the Erlang packages)
