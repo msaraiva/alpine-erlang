@@ -13,9 +13,10 @@ When creating a docker image, you probably want to minimize its size as much as 
 
 ```
 REPOSITORY                     TAG      IMAGE ID       CREATED           VIRTUAL SIZE
-msaraiva/phoenix_chat_example  latest   e2748af130aa   18 minutes ago    23.52 MB
-msaraiva/elixir                1.0.5    7cce889dd856   48 minutes ago    21.44 MB
-msaraiva/erlang                18.0     afe36ddc5624   58 minutes ago    16.78 MB
+hello                          latest   dfee0002c943   12 minutes ago    20.75 MB
+hello_phoenix                  latest   0ea00b410d90   24 minutes ago    25.09 MB
+msaraiva/elixir                1.0.5    df35f2590cd3   38 minutes ago    23.23 MB
+msaraiva/erlang                18.0     55ac7fb64a42   56 minutes ago    18.3 MB
 
 ```
 
@@ -115,7 +116,6 @@ A simple command line executable
 - Compilation on host machine
 - Requires Erlang 18.1 and Elixir >= 1.1.1 on the host machine
 - **You need to compile your application on the host machine before building this image**
-- Image size: **20.75MB**
 
 Dockerfile:
 
@@ -156,24 +156,12 @@ The same simple command line executable. But:
 
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **19.56MB**
-ex
-For this example, we'll be using [msaraiva/mix-escript-build](https://github.com/msaraiva/docker-alpine/blob/master/dockerfiles/mix-escript-build/Dockerfile/) as base image. This image uses the `ONBUILD` docker instruction to add project files required for compilation, just before the build. For more information about the `ONBUILD` instruction, check out the [Dockerfile Reference](https://docs.docker.com/reference/builder/#onbuild).
-
-Dockerfile:
-
-```
-FROM msaraiva/mix-escript-build
-```
 
 Building:
 
 ```
-$ docker build -t hello -f Dockerfile_compiling .
+$ docker run --rm -v $PWD:$PWD -w $PWD -e "MIX_ENV=prod" msaraiva/elixir sh -c "mix escript.build"
 ```
-
-> **Notice:** You'll need docker 1.5 or higher in order to use the `-f` option. In case you cannot update the docker version, just rename `Dockerfile_compiling` to `Dockerfile` and run the docker build command as before.
-
 
 Running:
 
@@ -206,7 +194,7 @@ This is the hello phoenix application created when you run `mix phoenix.new hell
 - Source: <https://github.com/msaraiva/docker-alpine-examples/>
 - Built with `mix release`
 - Compilation on host machine
-- Requires Erlang 18.0 and Elixir 1.0.5 on the host machine
+- Requires Erlang 18.1 and Elixir >= 1.1.1 on the host machine
 - **You need to generate a release on the host machine before building this image**
 - Image size: **23.21MB**
 
@@ -244,6 +232,7 @@ Building:
 ```
 $ cd hello_phoenix
 $ mix deps.get
+$ MIX_ENV=prod mix compile
 $ MIX_ENV=prod mix release
 $ docker build -t hello_phoenix .
 ```
@@ -263,7 +252,6 @@ A simple command line executable that calculates a dot product of two lists on a
 - NIF compiled with GCC
 - Compilation inside the container
 - **No need to install Erlang/Elixir on the host machine**
-- Image size: **19.44MB**
 
 Compiling:
 
