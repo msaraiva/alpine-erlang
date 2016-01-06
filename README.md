@@ -52,7 +52,7 @@ msaraiva/erlang                18.1     55ac7fb64a42   56 minutes ago    18.3 MB
 
 ## Packages
 
-In order to keep packages as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. The full list of Erlang packages available can be found [here](http://pkgs.alpinelinux.org/packages?package=erlang%25&repo=all&arch=x86_64).
+In order to keep packages as compact as possible, Erlang libraries for Alpine Linux are split into many different packages. The full list of Erlang packages available can be found [here](https://pkgs.alpinelinux.org/packages?name=erlang%25&repo=all&arch=x86_64&maintainer=all).
 
 
 ### <a name="what-is-apk"></a> What is apk?
