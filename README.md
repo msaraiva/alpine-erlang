@@ -15,8 +15,8 @@ When creating a docker image, you probably want to minimize its size as much as 
 REPOSITORY                     TAG      IMAGE ID       CREATED           VIRTUAL SIZE
 hello                          latest   dfee0002c943   12 minutes ago    20.75 MB
 hello_phoenix                  latest   0ea00b410d90   24 minutes ago    25.09 MB
-msaraiva/elixir                1.0.5    df35f2590cd3   38 minutes ago    23.23 MB
-msaraiva/erlang                18.0     55ac7fb64a42   56 minutes ago    18.3 MB
+msaraiva/elixir                1.2.0    df35f2590cd3   38 minutes ago    23.23 MB
+msaraiva/erlang                18.1     55ac7fb64a42   56 minutes ago    18.3 MB
 ```
 
 ## Getting started (WIP)
